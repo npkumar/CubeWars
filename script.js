@@ -39,6 +39,11 @@ function update(){
 	if(keys[40]) player.y+= speed;
 	if(keys[37]) player.x-= speed;
 	if(keys[39]) player.x+= speed;
+
+	if(player.x < 0) player.x = 0;
+	if(player.y < 0) player.y = 0;
+	if(player.x > width - player.width) player.x = width - player.width;
+	if(player.y > height - player.height) player.y = height - player.height;
 }
 
 function render(){
