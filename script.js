@@ -13,6 +13,13 @@ var player = {
 	height: 20
 };
 
+var cube = {
+	x: Math.random() * (width - 20),
+	y: Math.random() * (height - 20),
+	width: 20,
+	height: 20
+};
+
 window.addEventListener("keydown", function(e){
 	keys[e.keyCode] = true;
 }, false);
@@ -48,7 +55,12 @@ function update(){
 
 function render(){
 	context.clearRect(0, 0, width, height);
+	
+	context.fillStyle = "blue";
 	context.fillRect(player.x,player.y,player.width,player.height);
+
+	context.fillStyle = "red";
+	context.fillRect(cube.x,cube.y,cube.width,cube.height);
 }
 
 setInterval(function(){
