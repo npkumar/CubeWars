@@ -8,8 +8,8 @@ var keys = [],
 	score = 0;
 
 var player = {
-	x: 10,
-	y: 10,
+	x: 40,
+	y: 40,
 	width: 20,
 	height: 20
 };
@@ -64,6 +64,10 @@ function render() {
 
 	context.fillStyle = "red";
 	context.fillRect(cube.x, cube.y, cube.width, cube.height);
+
+	context.fillStyle = "black";
+	context.font = "bold 30px helvetica";
+	context.fillText(score, 10, 30);
 }
 
 function process(){
