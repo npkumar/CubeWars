@@ -4,7 +4,8 @@ var context = canvas.getContext("2d");
 var keys = [],
 	width = 500,
 	height = 400,
-	speed = 4;
+	speed = 4,
+	score = 0;
 
 var player = {
 	x: 10,
@@ -20,11 +21,11 @@ var cube = {
 	height: 20
 };
 
-window.addEventListener("keydown", function(e){
+window.addEventListener("keydown", function(e) {
 	keys[e.keyCode] = true;
 }, false);
 
-window.addEventListener("keyup", function(e){
+window.addEventListener("keyup", function(e) {
 	delete keys[e.keyCode];
 }, false);
 
@@ -36,33 +37,48 @@ left - 37
 right - 39
 */
 
-function game(){
+function game() {
 	update();
 	render();
 }
 
-function update(){
-	if(keys[38]) player.y-= speed;
-	if(keys[40]) player.y+= speed;
-	if(keys[37]) player.x-= speed;
-	if(keys[39]) player.x+= speed;
+function update() {
+	if (keys[38]) player.y -= speed;
+	if (keys[40]) player.y += speed;
+	if (keys[37]) player.x -= speed;
+	if (keys[39]) player.x += speed;
 
-	if(player.x < 0) player.x = 0;
-	if(player.y < 0) player.y = 0;
-	if(player.x > width - player.width) player.x = width - player.width;
-	if(player.y > height - player.height) player.y = height - player.height;
+	if (player.x < 0) player.x = 0;
+	if (player.y < 0) player.y = 0;
+	if (player.x > width - player.width) player.x = width - player.width;
+	if (player.y > height - player.height) player.y = height - player.height;
+
+	if(collision(player, cube)) process();
 }
 
-function render(){
+function render() {
 	context.clearRect(0, 0, width, height);
-	
+
 	context.fillStyle = "blue";
-	context.fillRect(player.x,player.y,player.width,player.height);
+	context.fillRect(player.x, player.y, player.width, player.height);
 
 	context.fillStyle = "red";
-	context.fillRect(cube.x,cube.y,cube.width,cube.height);
+	context.fillRect(cube.x, cube.y, cube.width, cube.height);
 }
 
-setInterval(function(){
+function process(){
+	score++;
+	cube.x = Math.random() * (width - 20);
+	cube.y = Math.random() * (height - 20);
+}
+
+function collision(one, two) {
+	return !(one.x > two.x + one.width ||
+		one.x + one.width < two.x ||
+		one.y > two.y + height ||
+		one.y + one.height < two.y);
+}
+
+setInterval(function() {
 	game();
-}, 1000/30); // 30fps
+}, 1000 / 30); // 30fps
